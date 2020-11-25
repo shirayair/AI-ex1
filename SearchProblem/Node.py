@@ -15,7 +15,7 @@ class Node:
         result = []
         for char in move_code:
             result.append(Node.MOVE[char])
-        return functools.reduce(lambda x, y: [x[0]+y[0], x[1]+y[1]], result)
+        return tuple(functools.reduce(lambda x, y: [x[0]+y[0], x[1]+y[1]], result))
 
     @staticmethod
     def __validate_action(move_code: str):

@@ -12,7 +12,7 @@ class ProblemSearch:
 
     @staticmethod
     def points_add(*points):
-        return functools.reduce(lambda x, y: [x[0]+y[0], x[1]+y[1]], points)
+        return functools.reduce(lambda x, y: (x[0]+y[0], x[1]+y[1]), points)
 
     @staticmethod
     def resolve_move(move_action: str):
@@ -20,7 +20,8 @@ class ProblemSearch:
 
     @staticmethod
     def move(position, move_action):
-        ProblemSearch.resolve_move(move_action)
+        return ProblemSearch.points_add(position,
+                                        ProblemSearch.resolve_move(move_action))
 
     def __init__(self, source, target, size, board):
         self.source = source
@@ -50,7 +51,7 @@ class ProblemSearch:
         return self.move(position, move_action)
 
     def is_goal(self, s):
-        return s == self.target
+        return s.position == self.target
 
     def step_cost(self, s):
         return self.board[s[0]][s[1]]
