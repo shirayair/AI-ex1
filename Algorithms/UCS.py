@@ -22,7 +22,7 @@ class UCS(SearchProblem.SearchProblemSolver):
         closed = set()
         while open_list:
             node = open_list.pop()
-            if self.is_goal(node):
+            if self.is_goal(node.state):
                 return node
             self.problem.num_of_nodes += 1
             closed.add(node.position)
