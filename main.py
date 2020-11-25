@@ -6,18 +6,8 @@ We just parse input and call methods from other modules.
 
 # do NOT import ways. This should be done from other files
 # simply import your modules and call the appropriate functions
-import Astar
-import IterativeDeepeningDFS as IDS
-import UCS
-import IterativeDeepeningAstar as IDAstar
-from problem import ProblemSearch
-
-
-def find_ucs_rout(source, target, size, graph):
-    problem = ProblemSearch(source, target, size, graph)
-    solver = UCS(problem)
-    solution, cost = solver()
-    save_output(True, solution, problem.num_of_nodes, cost)
+from Algorithms import *
+from SearchProblem.Problem import ProblemSearch
 
 
 def save_output(success, path_string=None, opened_nodes=None, cost=None):
@@ -30,29 +20,8 @@ def save_output(success, path_string=None, opened_nodes=None, cost=None):
         f.write(output)
 
 
-def find_astar_route(source, target, size, graph):
-    # import Algo
-    # 'call function to find path, and return list of indices'
-    problem = ProblemSearch(source, target, size, graph)
-    solution, cost = Astar.find_astar_route(problem, )
-    if solution:
-        save_output(True, solution, problem.num_of_nodes, cost)
-    else:
-        save_output(False, solution, problem.num_of_nodes, cost)
-
-
-def find_idastar_route(source, target, size, graph):
-    problem = ProblemSearch(source, target, size, graph)
-    solution, cost = IDAstar.find_idastar_route(problem)
-    if solution:
-        save_output(True, solution, problem.num_of_nodes, cost)
-    else:
-        save_output(False, solution, problem.num_of_nodes, cost)
-
-
-def find_ids_route(source, target, size, graph):
-    problem = ProblemSearch(source, target, size, graph)
-    solver = IDS.IterativeDeepeningDFS(problem)
+def find_route(problem, solver_type):
+    solver = solver_type(problem)
     solution, cost = solver()
     if solution:
         save_output(True, solution, problem.num_of_nodes, cost)
@@ -61,19 +30,19 @@ def find_ids_route(source, target, size, graph):
 
 
 def dispatch(file):
+    SOLVERS = {
+        "UCS": UCS.UCS,
+        "ASTAR": Astar.AStar,
+        "IDASTAR": IterativeDeepeningAstar.IterativeDeepeningAstar,
+        "IDS": IterativeDeepeningDFS.IterativeDeepeningDFS
+    }
     start = tuple(map(int, file[1].split(',')))
     goal = tuple(map(int, file[2].split(',')))
     size = int(file[3])
     graph = [list(map(int, row.split(','))) for row in file[4:]]
+    problem = ProblemSearch(start, goal, size, graph)
 
-    if file[0] == 'UCS':
-        find_ucs_rout(start, goal, size, graph)
-    elif file[0] == 'ASTAR':
-        find_astar_route(start, goal, size, graph)
-    elif file[0] == 'IDASTAR':
-        find_idastar_route(start, goal, size, graph)
-    elif file[0] == 'IDS':
-        find_ids_route(start, goal, size, graph)
+    find_route(problem, SOLVERS[file[0]])
 
 
 if __name__ == '__main__':

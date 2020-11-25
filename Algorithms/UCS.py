@@ -6,7 +6,7 @@ from SearchProblem import SearchProblem
 from SearchProblem import Node, Problem
 
 
-class UCS(SearchProblem.SearchProblem):
+class UCS(SearchProblem.SearchProblemSolver):
     @staticmethod
     def default_evaluator(node: Node.Node):
         return node.path_code

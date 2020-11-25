@@ -3,7 +3,7 @@ import Problem, Node
 MAX_DEPTH = 20
 
 
-class SearchProblem:
+class SearchProblemSolver:
     """This class performs an iterative deepening
     DFS search on a given graph.
     """

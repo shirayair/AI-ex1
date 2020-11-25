@@ -2,7 +2,7 @@ from SearchProblem import SearchProblem
 from SearchProblem import Problem, Node
 
 
-class IterativeDeepeningDFS(SearchProblem.SearchProblem):
+class IterativeDeepeningDFS(SearchProblem.SearchProblemSolver):
     """This class performs an iterative deepening
     DFS search on a given graph.
     """

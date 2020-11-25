@@ -6,7 +6,7 @@ from SearchProblem import Node, SearchProblem
 import Utilities.Heuristic
 
 
-class IterativeDeepeningAstar(SearchProblem.SearchProblem):
+class IterativeDeepeningAstar(SearchProblem.SearchProblemSolver):
     def solve(self):
         max_depth = Utilities.Heuristic.heuristic_chebyshev(
             self.start_node, self.problem.target)
