@@ -14,7 +14,10 @@ class SearchProblemSolver:
         self.start_node = Node.Node(problem.source, 0)
 
     def __call__(self):
-        return self.solve()
+        solution = self.solve()
+        if solution is None:
+            return None, None
+        return solution.solution()
 
     def solve(self):
         raise NotImplementedError()

@@ -9,18 +9,23 @@ class IterativeDeepeningDFS(SearchProblem.SearchProblemSolver):
 
     def solve(self):
         for max_depth in range(1, 20):
-            res = self._dfs_search(max_depth)
+            res = self._dfs_search(self.start_node, max_depth)
             if res:
-                return res
+                return  res
 
-        return None, None
+        return None
 
-    def _dfs_search(self, max_depth: int):
-        open_ls = [self.start_node]
+    def _dfs_search(self, start_node: Node.Node, max_depth: int):
+        if self.problem.is_goal(start_node.state):
+            return start_node
+        if start_node.depth > max_depth:
+            return
+
+        open_ls = self.expand(start_node)
+        print(start_node, open_ls)
         while open_ls:
             n = open_ls.pop()
             self.problem.num_of_nodes += 1
-            if self.problem.is_goal(n):
-                return n
-            if n.depth < max_depth:
-                open_ls.extend(n.expand(self.problem))
+            result = self._dfs_search(n, max_depth)
+            if result:
+                return result

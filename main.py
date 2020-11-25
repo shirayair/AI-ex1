@@ -46,6 +46,6 @@ def dispatch(file):
 
 
 if __name__ == '__main__':
-    with open("input.txt", "r") as reader:
+    with open("input4.txt", "r") as reader:
         file = [line for line in reader.read().splitlines() if line]
     dispatch(file)

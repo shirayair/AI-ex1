@@ -1,6 +1,8 @@
 import itertools
 import functools
 
+from typing import Tuple
+
 
 class ProblemSearch:
     MOVE = {
@@ -32,15 +34,15 @@ class ProblemSearch:
 
     @staticmethod
     def get_all_possible_moves():
-        actions = list("LURD")
-        actions.extend([''.join(action)
-                        for action in itertools.product(list("LR"), list("UD"))])
-        return actions
+        return ["R", "RD", "D", "LD", "L", "LU", "U", "RU"]
 
     def validate_move(self, position, move_action):
         new_position = ProblemSearch.move(position, move_action)
-        return new_position[0] >= 0 and new_position[0] < self.size \
-            and new_position[1] >= 0 and new_position[1] < self.size
+        
+        if new_position[0] >= 0 and new_position[0] < self.size \
+            and new_position[1] >= 0 and new_position[1] < self.size:
+            return self.board[new_position[0]][new_position[1]] != -1
+        return False
 
     def actions(self, position):
         return filter(lambda move_action: self.validate_move(position, move_action),
@@ -50,8 +52,8 @@ class ProblemSearch:
         self.validate_move(position, move_action)
         return self.move(position, move_action)
 
-    def is_goal(self, s):
-        return s.position == self.target
+    def is_goal(self, s: Tuple[int, int]):
+        return s == self.target
 
     def step_cost(self, s):
         return self.board[s[0]][s[1]]

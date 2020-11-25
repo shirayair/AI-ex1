@@ -18,5 +18,4 @@ class AStar(SearchProblem.SearchProblemSolver):
             Utilities.Heuristic.heuristic_chebyshev(
                 n.position, self.problem.target)
         solver = UCS.UCS(self.problem, f)
-        solution, cost = solver()
-        return solution, cost
+        return solver()

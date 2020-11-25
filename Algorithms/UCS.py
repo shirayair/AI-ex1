@@ -23,7 +23,7 @@ class UCS(SearchProblem.SearchProblemSolver):
         while open_list:
             node = open_list.pop()
             if self.is_goal(node):
-                return node.solution()
+                return node
             self.problem.num_of_nodes += 1
             closed.add(node.position)
             for child in self.expand(node):
@@ -32,4 +32,3 @@ class UCS(SearchProblem.SearchProblemSolver):
                 elif child in open_list and self.evaluator(child) < open_list[child]:
                     del open_list[child]
                     open_list.append(child)
-        return None, None
