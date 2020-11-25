@@ -1,4 +1,27 @@
+import itertools
+import functools
+
+
 class ProblemSearch:
+    MOVE = {
+        "R": (0, 1),
+        "L": (0, -1),
+        "U": (-1, 0),
+        "D": (1, 0)
+    }
+
+    @staticmethod
+    def points_add(*points):
+        return functools.reduce(lambda x, y: [x[0]+y[0], x[1]+y[1]], points)
+
+    @staticmethod
+    def resolve_move(move_action: str):
+        return ProblemSearch.points_add(*[ProblemSearch.MOVE[char] for char in move_action])
+
+    @staticmethod
+    def move(position, move_action):
+        ProblemSearch.resolve_move(move_action)
+
     def __init__(self, source, target, size, board):
         self.source = source
         self.size = size
@@ -6,45 +29,25 @@ class ProblemSearch:
         self.target = target
         self.num_of_nodes = 0
 
-    def actions(self, s):
-        moves = []
-        x, y = s[0], s[1]
-        if y < self.size - 1 and self.board[x][y + 1] != -1:
-            moves.append('R')
-            if x < self.size - 1 and self.board[x + 1][y] != -1 and self.board[x + 1][y + 1] != -1:
-                moves.append('RD')
-            if x > 0 and self.board[x - 1][y] != -1 and self.board[x - 1][y + 1] != -1:
-                moves.append('RU')
-        if x < self.size - 1 and self.board[x + 1][y] != -1:
-            moves.append('D')
-        if y > 0 and self.board[x][y - 1] != -1:
-            moves.append('L')
-            if x < self.size - 1 and self.board[
-                    x + 1][y] != -1 and self.board[x + 1][y - 1] != -1:
-                moves.append('LD')
-            if x > 0 and self.board[x - 1][y] != -1 and self.board[x - 1][y - 1] != -1:
-                moves.append('LU')
-        if x > 0 and self.board[x - 1][y] != -1:
-            moves.append('U')
-        return moves
+    @staticmethod
+    def get_all_possible_moves():
+        actions = list("LURD")
+        actions.extend([''.join(action)
+                        for action in itertools.product(list("LR"), list("UD"))])
+        return actions
 
-    def succ(self, s, action):
-        if action == 'R':
-            return s[0], s[1] + 1
-        if action == 'RD':
-            return s[0] + 1, s[1] + 1
-        if action == 'D':
-            return s[0] + 1, s[1]
-        if action == 'LD':
-            return s[0] + 1, s[1] - 1
-        if action == 'L':
-            return s[0], s[1] - 1
-        if action == 'LU':
-            return s[0] - 1, s[1] - 1
-        if action == 'U':
-            return s[0] - 1, s[1]
-        if action == 'RU':
-            return s[0] - 1, s[1] + 1
+    def validate_move(self, position, move_action):
+        new_position = ProblemSearch.move(position, move_action)
+        return new_position[0] >= 0 and new_position[0] < self.size \
+            and new_position[1] >= 0 and new_position[1] < self.size
+
+    def actions(self, position):
+        return filter(lambda move_action: self.validate_move(position, move_action),
+                      ProblemSearch.get_all_possible_moves())
+
+    def succ(self, position, move_action):
+        self.validate_move(position, move_action)
+        return self.move(position, move_action)
 
     def is_goal(self, s):
         return s == self.target
@@ -54,7 +57,3 @@ class ProblemSearch:
 
     def state_str(self, s):
         return '\n'.join([str(s[i * self.size:(i + 1) * self.size]) for i in range(0, self.size)])
-
-
-if __name__ == '__main__':
-    print("hi")

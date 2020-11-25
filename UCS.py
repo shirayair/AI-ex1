@@ -2,7 +2,7 @@ import math
 
 import PriorityQueue
 import PriorityQueue as pq
-from node import Node
+import Node
 
 
 # in ucs we prioritize according to the cost up until the current node
@@ -17,7 +17,7 @@ def find_ucs_route(problem):
 
 def best_first_search(problem, f):
     open_list = PriorityQueue.PriorityQueue(f)  # Priority Queue
-    open_list.append(Node(problem.source, 0))
+    open_list.append(Node.Node(problem.source, 0))
     closed = set()
     while open_list:
         node = open_list.pop()
