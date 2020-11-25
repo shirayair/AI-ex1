@@ -21,7 +21,7 @@ class ProblemSearch:
         if y > 0 and self.board[x][y - 1] != -1:
             moves.append('L')
             if x < self.size - 1 and self.board[
-                x + 1][y] != -1 and self.board[x + 1][y - 1] != -1:
+                    x + 1][y] != -1 and self.board[x + 1][y - 1] != -1:
                 moves.append('LD')
             if x > 0 and self.board[x - 1][y] != -1 and self.board[x - 1][y - 1] != -1:
                 moves.append('LU')

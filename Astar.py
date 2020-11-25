@@ -3,9 +3,8 @@ import math
 import UCS
 
 
-
 def find_astar_route(problem):
-    f = lambda n: UCS.g(n) + heuristic_chebyshev(n, problem.target)
+    def f(n): return UCS.g(n) + heuristic_chebyshev(n, problem.target)
     solution, cost = UCS.best_first_search(problem, f)
     return solution, cost
 

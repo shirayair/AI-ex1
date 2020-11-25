@@ -21,7 +21,8 @@ def find_idastar_route(problem):
 
 
 def search(problem, start_node, f_limit):
-    new_f = start_node.path_cost + heuristic_chebyshev(start_node, problem.target)
+    new_f = start_node.path_cost + \
+        heuristic_chebyshev(start_node, problem.target)
     if new_f > f_limit:
         return None, new_f
     if problem.is_goal(start_node.state):

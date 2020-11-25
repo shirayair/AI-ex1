@@ -34,4 +34,3 @@ def best_first_search(problem, f):
                 del open_list[child]
                 open_list.append(child)
     return None, None
-
