@@ -1,7 +1,5 @@
-import SearchProblem
-
-import Problem
-import Node
+from SearchProblem import SearchProblem
+from SearchProblem import Problem, Node
 
 
 class IterativeDeepeningDFS(SearchProblem.SearchProblem):

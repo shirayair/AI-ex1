@@ -1,5 +1,4 @@
-import Problem
-import Node
+from SearchProblem import Problem, Node
 
 MAX_DEPTH = 20
 

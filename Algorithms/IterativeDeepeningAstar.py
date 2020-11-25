@@ -1,15 +1,14 @@
 import math
 import sys
 
-import SearchProblem
-import Node
+from SearchProblem import Node, SearchProblem
 
-import Utilities
+import Utilities.Heuristic
 
 
 class IterativeDeepeningAstar(SearchProblem.SearchProblem):
     def solve(self):
-        max_depth = Utilities.heuristic_chebyshev(
+        max_depth = Utilities.Heuristic.heuristic_chebyshev(
             self.start_node, self.problem.target)
         self.problem.num_of_nodes += 1
         while max_depth < SearchProblem.MAX_DEPTH:
@@ -22,7 +21,8 @@ class IterativeDeepeningAstar(SearchProblem.SearchProblem):
 
     def search(self, current_node, f_limit):
         new_f = current_node.path_cost + \
-            Utilities.heuristic_chebyshev(current_node, self.problem.target)
+            Utilities.Heuristic.heuristic_chebyshev(
+                current_node, self.problem.target)
         if new_f > f_limit:
             return None, new_f
         if self.is_goal(current_node.position):

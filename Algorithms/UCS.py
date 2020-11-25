@@ -1,8 +1,7 @@
 import math
 
-import PriorityQueue
-import PriorityQueue as pq
-import Node
+from Utilities import PriorityQueue
+from SearchProblem import Node
 
 
 # in ucs we prioritize according to the cost up until the current node
