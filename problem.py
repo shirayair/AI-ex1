@@ -1,5 +1,4 @@
 class ProblemSearch:
-
     def __init__(self, source, target, size, board):
         self.source = source
         self.size = size
