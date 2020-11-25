@@ -27,8 +27,12 @@ class Node:
             assert char in Node.MOVE
         assert Node.resolve_move(move_code) != [0, 0]
 
+    @property
+    def state(self):
+        return self.position
+
     def __init__(self, position,
-                 parent: Node = None,
+                 parent=None,
                  action: str = None,
                  path_cost: int = 0):
         self.__validate_action(action)

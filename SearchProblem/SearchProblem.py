@@ -1,4 +1,5 @@
-import Problem, Node
+from SearchProblem import Problem
+from SearchProblem import Node
 
 MAX_DEPTH = 20
 
@@ -10,7 +11,7 @@ class SearchProblemSolver:
 
     def __init__(self, problem: Problem.ProblemSearch):
         self.problem = problem
-        self.start_node = Node.Node(problem.s_start, 0)
+        self.start_node = Node.Node(problem.source, 0)
 
     def __call__(self):
         return self.solve()

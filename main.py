@@ -21,6 +21,7 @@ def save_output(success, path_string=None, opened_nodes=None, cost=None):
 
 
 def find_route(problem, solver_type):
+    print(problem, solver_type)
     solver = solver_type(problem)
     solution, cost = solver()
     if solution:

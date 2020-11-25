@@ -1,4 +1,4 @@
-import Astar
-import IterativeDeepeningAstar
-import IterativeDeepeningDFS
-import UCS
+from Algorithms import Astar
+from Algorithms import IterativeDeepeningAstar
+from Algorithms import IterativeDeepeningDFS
+from Algorithms import UCS
