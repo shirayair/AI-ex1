@@ -1,20 +1,15 @@
+import SearchProblem
+
 import Problem
 import Node
 
 
-class IterativeDeepeningDFS:
+class IterativeDeepeningDFS(SearchProblem.SearchProblem):
     """This class performs an iterative deepening
     DFS search on a given graph.
     """
- 
-    def __init__(self, problem: Problem.ProblemSearch):
-        self.problem = problem
-        self.start_node = Node.Node(problem.s_start, 0)
 
-    def __call__(self):
-        return self.find_ids_route()
-
-    def find_ids_route(self):
+    def solve(self):
         for max_depth in range(1, 20):
             res = self._dfs_search(max_depth)
             if res:

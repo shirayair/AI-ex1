@@ -1,43 +1,35 @@
 import math
 import sys
 
-from node import Node
+import SearchProblem
+import Node
 
-MAX_DEPTH = math.inf
-
-
-def find_idastar_route(problem):
-    global MAX_DEPTH
-    start_node = Node(problem.source, 0)
-    MAX_DEPTH = heuristic_chebyshev(start_node, problem.target)
-    problem.num_of_nodes += 1
-    while MAX_DEPTH < 20:
-        f_limit = MAX_DEPTH
-        MAX_DEPTH = math.inf
-        node = search(problem, start_node, f_limit)
-        if node:
-            return node
-    return None, None
+import Utilities
 
 
-def search(problem, start_node, f_limit):
-    new_f = start_node.path_cost + \
-        heuristic_chebyshev(start_node, problem.target)
-    if new_f > f_limit:
-        return None, new_f
-    if problem.is_goal(start_node.state):
-        return start_node.solution(), f_limit
-    for child in start_node.expand(problem):
-        solution = search(problem, child, f_limit)
-        problem.num_of_nodes += 1
-        if solution:
-            return solution
-    return None
+class IterativeDeepeningAstar(SearchProblem.SearchProblem):
+    def solve(self):
+        max_depth = Utilities.heuristic_chebyshev(
+            self.start_node, self.problem.target)
+        self.problem.num_of_nodes += 1
+        while max_depth < SearchProblem.MAX_DEPTH:
+            f_limit = max_depth
+            max_depth = math.inf
+            node = self.search(self.start_node, f_limit)
+            if node:
+                return node
+        return None, None
 
-
-def heuristic_chebyshev(node, goal):
-    x1, y1 = node.state
-    x2, y2 = goal
-    dx = abs(x1 - x2)
-    dy = abs(y1 - y2)
-    return 1 * (dx + dy) + (-2) * min(dx, dy)
+    def search(self, current_node, f_limit):
+        new_f = current_node.path_cost + \
+            Utilities.heuristic_chebyshev(current_node, self.problem.target)
+        if new_f > f_limit:
+            return None, new_f
+        if self.is_goal(current_node.position):
+            return current_node.solution(), f_limit
+        for child in self.expand(current_node):
+            solution = self.search(child, f_limit)
+            self.problem.num_of_nodes += 1
+            if solution:
+                return solution
+        return None

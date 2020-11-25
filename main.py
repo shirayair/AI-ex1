@@ -7,9 +7,9 @@ We just parse input and call methods from other modules.
 # do NOT import ways. This should be done from other files
 # simply import your modules and call the appropriate functions
 import Astar
-import IDS
+import IterativeDeepeningDFS as IDS
 import UCS
-import Idastar
+import IterativeDeepeningAstar as IDAstar
 from problem import ProblemSearch
 
 
@@ -42,7 +42,7 @@ def find_astar_route(source, target, size, graph):
 
 def find_idastar_route(source, target, size, graph):
     problem = ProblemSearch(source, target, size, graph)
-    solution, cost = Idastar.find_idastar_route(problem)
+    solution, cost = IDAstar.find_idastar_route(problem)
     if solution:
         save_output(True, solution, problem.num_of_nodes, cost)
     else:
@@ -51,7 +51,8 @@ def find_idastar_route(source, target, size, graph):
 
 def find_ids_route(source, target, size, graph):
     problem = ProblemSearch(source, target, size, graph)
-    solution, cost = IDS.find_ids_route(problem)
+    solver = IDS.IterativeDeepeningDFS(problem)
+    solution, cost = solver()
     if solution:
         save_output(True, solution, problem.num_of_nodes, cost)
     else:
