@@ -57,7 +57,7 @@ class Node:
         return next_node
 
     def solution(self):
-        return [node.action for node in self.path()[1:]], self.path_cost
+        return '-'.join([node.action for node in self.path()[1:]]), self.path_cost
 
     def path(self):
         node, path_back = self, []

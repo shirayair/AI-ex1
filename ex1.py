@@ -9,6 +9,8 @@ We just parse input and call methods from other modules.
 from Algorithms import *
 from SearchProblem.Problem import ProblemSearch
 
+import argparse
+
 
 def save_output(success, path_string=None, opened_nodes=None, cost=None):
     output = ''
@@ -16,8 +18,8 @@ def save_output(success, path_string=None, opened_nodes=None, cost=None):
         output = "no path"
     else:
         output = f'''{path_string} {cost} {opened_nodes}'''
-    with open('output.txt', mode='w+', encoding='utf-8') as f:
-        f.write(output)
+    with open("output.txt", "wb") as f:
+        f.write(output.encode())
 
 
 def find_route(problem, solver_type):
@@ -49,8 +51,13 @@ def dispatch(file):
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--input-path", help="Path to the input file", default="input.txt")
+    args = parser.parse_args()
+
     try:
-        with open("input.txt", "r") as reader:
+        with open(args.input_path, "r") as reader:
             file = [line for line in reader.read().splitlines() if line]
         dispatch(file)
     except Exception as e:
