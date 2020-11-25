@@ -42,10 +42,16 @@ def dispatch(file):
     graph = [list(map(int, row.split(','))) for row in file[4:]]
     problem = ProblemSearch(start, goal, size, graph)
 
-    find_route(problem, SOLVERS[file[0]])
+    if file[0] not in SOLVERS:
+        print(f"Error: {file[0]} is not a valid algorithm!")
+    else:
+        find_route(problem, SOLVERS[file[0]])
 
 
 if __name__ == '__main__':
-    with open("input4.txt", "r") as reader:
-        file = [line for line in reader.read().splitlines() if line]
-    dispatch(file)
+    try:
+        with open("input.txt", "r") as reader:
+            file = [line for line in reader.read().splitlines() if line]
+        dispatch(file)
+    except Exception as e:
+        print(e)

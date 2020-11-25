@@ -22,7 +22,6 @@ class IterativeDeepeningDFS(SearchProblem.SearchProblemSolver):
             return
 
         open_ls = self.expand(start_node)
-        print(start_node, open_ls)
         while open_ls:
             n = open_ls.pop()
             self.problem.num_of_nodes += 1

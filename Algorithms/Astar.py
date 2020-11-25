@@ -13,6 +13,9 @@ from SearchProblem import Node, Problem
 
 
 class AStar(SearchProblem.SearchProblemSolver):
+    def __call__(self):
+        return self.solve()
+
     def solve(self):
         def f(n): return n.path_cost + \
             Utilities.Heuristic.heuristic_chebyshev(
