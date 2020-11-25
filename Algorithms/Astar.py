@@ -7,7 +7,8 @@ import Utilities.Heuristic
 
 
 def find_astar_route(problem):
-    def f(n): return UCS.g(n) + \
+    def f(n): return n.path_cost + \
         Utilities.Heuristic.heuristic_chebyshev(n.state, problem.target)
-    solution, cost = UCS.best_first_search(problem, f)
+    solver = UCS.UCS(problem, f)
+    solution, cost = solver()
     return solution, cost

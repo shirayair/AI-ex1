@@ -15,7 +15,8 @@ from problem import ProblemSearch
 
 def find_ucs_rout(source, target, size, graph):
     problem = ProblemSearch(source, target, size, graph)
-    solution, cost = UCS.find_ucs_route(problem, )
+    solver = UCS(problem)
+    solution, cost = solver()
     save_output(True, solution, problem.num_of_nodes, cost)
 
 

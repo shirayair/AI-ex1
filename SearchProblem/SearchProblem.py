@@ -1,4 +1,4 @@
-from SearchProblem import Problem, Node
+import Problem, Node
 
 MAX_DEPTH = 20
 
@@ -18,7 +18,7 @@ class SearchProblem:
     def solve(self):
         raise NotImplementedError()
 
-    def is_goal(self, node):
+    def is_goal(self, node: Node.Node):
         return self.problem.is_goal(node)
 
     def expand(self, node):
