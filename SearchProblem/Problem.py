@@ -37,13 +37,41 @@ class ProblemSearch:
     def get_all_possible_moves():
         return ProblemSearch.ORDERED_MOVED
 
+    def _is_diagonal_move(self, move_action):
+        return len(move_action) == 2
+
+    def _is_within_borders(self, position):
+        return position[0] >= 0 and position[0] < self.size \
+            and position[1] >= 0 and position[1] < self.size
+
+    def _is_wall(self, position):
+        return self.board[position[0]][position[1]] == -1
+
+    def _validate_diagonal_no_wall(self, position, move_action):
+        """Checks that a diagonal move is valid, this function assumes
+        that the move is legal, i.e. does not step outside the board.
+
+        Args:
+            position (Tuple[int, int]): new position
+            move_action (str): Diagonal action (two words)
+
+        Returns:
+            bool: 
+        """
+        firstMove, secondMove = move_action[0], move_action[1]
+        return not any((self._is_wall(ProblemSearch.move(position, firstMove)),
+                        self._is_wall(ProblemSearch.move(position, secondMove))))
+
     def validate_move(self, position, move_action):
         new_position = ProblemSearch.move(position, move_action)
+        if not self._is_within_borders(new_position):
+            return False
 
-        if new_position[0] >= 0 and new_position[0] < self.size \
-                and new_position[1] >= 0 and new_position[1] < self.size:
-            return self.board[new_position[0]][new_position[1]] != -1
-        return False
+        if self._is_diagonal_move(move_action):
+            if not self._validate_diagonal_no_wall(position, move_action):
+                return False
+
+        return not self._is_wall(new_position)
 
     def actions(self, position):
         return filter(lambda move_action: self.validate_move(position, move_action),
