@@ -5,6 +5,7 @@ from typing import Tuple
 
 
 class ProblemSearch:
+    ORDERED_MOVED = ["R", "RD", "D", "LD", "L", "LU", "U", "RU"]
     MOVE = {
         "R": (0, 1),
         "L": (0, -1),
@@ -34,13 +35,13 @@ class ProblemSearch:
 
     @staticmethod
     def get_all_possible_moves():
-        return ["R", "RD", "D", "LD", "L", "LU", "U", "RU"]
+        return ProblemSearch.ORDERED_MOVED
 
     def validate_move(self, position, move_action):
         new_position = ProblemSearch.move(position, move_action)
-        
+
         if new_position[0] >= 0 and new_position[0] < self.size \
-            and new_position[1] >= 0 and new_position[1] < self.size:
+                and new_position[1] >= 0 and new_position[1] < self.size:
             return self.board[new_position[0]][new_position[1]] != -1
         return False
 

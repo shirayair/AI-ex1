@@ -1,6 +1,8 @@
 import operator
 import functools
 
+from SearchProblem.Problem import ProblemSearch
+
 
 class Node:
     MOVE = {
@@ -70,7 +72,8 @@ class Node:
         return f"<{self.position}>"
 
     def __lt__(self, node):
-        return self.resolve_move(self.action) < self.resolve_move(node.action)
+        return ProblemSearch.ORDERED_MOVED.index(self.action) < \
+            ProblemSearch.ORDERED_MOVED.index(node.action)
 
     def __eq__(self, other):
         return isinstance(other, Node) and self.position == other.position
