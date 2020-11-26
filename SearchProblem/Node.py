@@ -72,8 +72,10 @@ class Node:
         return f"<{self.position}>"
 
     def __lt__(self, node):
-        return ProblemSearch.ORDERED_MOVED.index(self.action) < \
-            ProblemSearch.ORDERED_MOVED.index(node.action)
+        if node.depth == self.depth:
+            return ProblemSearch.ORDERED_MOVED.index(self.action) < \
+                ProblemSearch.ORDERED_MOVED.index(node.action)
+        return self.depth > node.depth
 
     def __eq__(self, other):
         return isinstance(other, Node) and self.position == other.position
